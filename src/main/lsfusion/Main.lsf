@@ -1,0 +1,29 @@
+MODULE Main;
+REQUIRE Time, Authentication;
+CLASS Reception 'Приходы';
+number 'Номер' = DATA STRING[10] (Reception) NONULL; date 'Дата' = DATA DATE (Reception) NONULL;
+name 'Наименование' = DATA STRING[50] (Reception) NONULL; quantity 'Количество' = DATA NUMERIC[10,3] (Reception) NONULL; price 'Цена' = DATA NUMERIC[10,2] (Reception) NONULL;
+userDate 'Дата ввода' = DATA DATE (Reception); userName 'Пользователь' = DATA STRING[50] (Reception);
+
+
+unique = GROUP AGGR Reception o BY number(o), date(o), name(o);
+CONSTRAINT quantity(Reception o) > 1000 OR quantity(o) < 0 MESSAGE 'Недопустимое количество'; WHEN SET(Reception o IS Reception) AND NOT userDate(o) DO userDate(o) <- currentDate();
+WHEN SET(Reception o IS Reception) AND NOT userName(o) DO userName(o) <- STRING[50](currentUserName());
+
+FORM editReception 'Приход'
+OBJECTS r = Reception PANEL 
+PROPERTIES (r) number, date, name, quantity, price
+EDIT Reception OBJECT r
+;
+
+FORM viewReception 'Приходы'
+OBJECTS r = Reception 
+PROPERTIES (r) READONLY number, date, name, quantity, price, userName, userDate PROPERTIES (r) NEWSESSION NEW, EDIT, DELETE
+;
+
+
+NAVIGATOR {
+    NEW FOLDER move 'Движение' WINDOW toolbar FIRST { 
+    NEW FORM viewReception; 
+}
+}
