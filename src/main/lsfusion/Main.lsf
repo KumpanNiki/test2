@@ -1,8 +1,12 @@
 MODULE Main;
 
 #for test
+
 REQUIRE Time, Authentication;
+
+CLASS Test 'Test';
 CLASS Reception 'Приходы';
+
 number 'Номер' = DATA STRING[10] (Reception) NONULL; date 'Дата' = DATA DATE (Reception) NONULL;
 name 'Наименование' = DATA STRING[50] (Reception) NONULL; quantity 'Количество' = DATA NUMERIC[10,3] (Reception) NONULL; price 'Цена' = DATA NUMERIC[10,2] (Reception) NONULL;
 userDate 'Дата ввода' = DATA DATE (Reception); userName 'Пользователь' = DATA STRING[50] (Reception);
