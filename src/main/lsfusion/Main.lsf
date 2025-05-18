@@ -12,7 +12,7 @@ name 'Наименование' = DATA STRING[50] (Reception) NONULL; quantity '
 userDate 'Дата ввода' = DATA DATE (Reception); userName 'Пользователь' = DATA STRING[50] (Reception);
 
 
-unique = GROUP AGGR Reception o BY number(o), date(o), name(o);
+
 CONSTRAINT quantity(Reception o) > 1000 OR quantity(o) < 0 MESSAGE 'Недопустимое количество'; WHEN SET(Reception o IS Reception) AND NOT userDate(o) DO userDate(o) <- currentDate();
 WHEN SET(Reception o IS Reception) AND NOT userName(o) DO userName(o) <- STRING[50](currentUserName());
 
