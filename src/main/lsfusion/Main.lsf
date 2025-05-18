@@ -1,4 +1,5 @@
 MODULE Main;
+#test
 REQUIRE Time, Authentication;
 CLASS Reception 'Приходы';
 number 'Номер' = DATA STRING[10] (Reception) NONULL; date 'Дата' = DATA DATE (Reception) NONULL;
